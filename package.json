@@ -1,0 +1,26 @@
+{
+  "name": "arus",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Live traffic congestion read from public city CCTV in Indonesia",
+  "license": "MIT",
+  "keywords": ["traffic", "cctv", "congestion", "indonesia", "object-detection", "maplibre"],
+  "type": "module",
+  "main": "server/index.js",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/index.js",
+    "discover": "node --disable-warning=ExperimentalWarning server/discover.js",
+    "model": "node scripts/fetch-model.js",
+    "postinstall": "node scripts/vendor.js && node scripts/fetch-model.js"
+  },
+  "dependencies": {
+    "@fontsource-variable/overpass": "^5.3.0",
+    "hls.js": "^1.7.4",
+    "maplibre-gl": "^6.18.0",
+    "onnxruntime-node": "^1.31.1",
+    "sharp": "^0.35.5"
+  }
+}

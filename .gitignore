@@ -1,0 +1,9 @@
+node_modules/
+public/vendor/
+models/*.onnx
+models/*.part
+data/
+*.log
+.env
+.DS_Store
+Thumbs.db

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Arus - Live traffic from public CCTV</title>
+  <meta name="description" content="Arus reads hundreds of public traffic cameras across Indonesian cities at once, counts the vehicles, and shows where traffic has stopped.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#16191c">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/vendor/fonts/overpass-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/landing.css">
+  <script type="module" src="/js/landing.js"></script>
+</head>
+<body class="landing">
+  <a class="skip" href="#reel-sec">Skip to content</a>
+
+  <header class="top">
+    <a class="sign" href="/" aria-label="Arus">
+      <span class="sign-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2 4 10.5h5.2V22h5.6V10.5H20z" fill="currentColor"/></svg>
+      </span>
+      <span class="sign-word">Arus</span>
+    </a>
+    <nav class="top-nav" aria-label="Sections">
+      <a class="tool" href="#how">How it reads</a>
+      <a class="tool" href="#cities">Cities</a>
+      <a class="tool" href="#hood">Under the hood</a>
+    </nav>
+    <div class="top-tools">
+      <button class="tool search-trigger" id="search-btn" type="button" aria-label="Search roads, junctions and cities">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M10.5 4a6.5 6.5 0 0 1 5.2 10.4l4 4-1.4 1.4-4-4A6.5 6.5 0 1 1 10.5 4zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z" fill="currentColor"/></svg>
+        <span class="search-word">Search</span>
+        <kbd aria-hidden="true">/</kbd>
+      </button>
+      <button class="tool tool-sq" id="lang-btn" type="button" aria-label="Bahasa Indonesia">ID</button>
+      <a class="btn btn-primary btn-sm" id="open-btn" href="/live">Open live map</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero night" aria-labelledby="h1">
+      <canvas id="flow-road" aria-hidden="true"></canvas>
+      <canvas id="flow" aria-hidden="true"></canvas>
+      <div class="hero-tags" id="hero-tags"></div>
+
+      <div class="hero-copy wrap">
+        <p class="hero-live"><span class="live-dot" aria-hidden="true"></span><span id="hero-live">Connecting to the cameras</span></p>
+        <h1 id="h1">Every traffic camera, read at once.</h1>
+        <p class="lede" id="lede"></p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" id="cta1" href="/live">Open the live map</a>
+          <a class="btn btn-ghost" id="cta2" href="#how">See how a road is read</a>
+        </div>
+      </div>
+
+      <dl class="hero-stats" id="stats">
+        <div><dt></dt><dd>–</dd></div>
+        <div><dt></dt><dd>–</dd></div>
+        <div><dt></dt><dd>–</dd></div>
+      </dl>
+
+      <div class="ticker">
+        <div class="ticker-label"><span class="live-dot" aria-hidden="true"></span><span id="ticker-label">Worst right now</span></div>
+        <div class="ticker-view"><div class="ticker-track" id="ticker"></div></div>
+      </div>
+    </section>
+
+    <div class="sheet">
+      <section class="sec reel-sec" id="reel-sec" aria-labelledby="reel-title">
+        <div class="sec-head wrap">
+          <h2 id="reel-title"></h2>
+          <p id="reel-sub"></p>
+        </div>
+        <div class="reel" id="reel"></div>
+      </section>
+
+      <section class="sec how" id="how" data-step="1" data-ab="a" aria-labelledby="how-title">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 id="how-title"></h2>
+            <p id="how-sub"></p>
+          </div>
+          <div class="how-grid">
+            <div class="how-stage">
+              <div class="frame how-frame" id="how-frame"></div>
+              <dl class="how-meter" id="how-meter"></dl>
+            </div>
+            <ol class="how-steps" id="how-steps"></ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="cities" aria-labelledby="cities-title">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 id="cities-title"></h2>
+            <p id="cities-sub"></p>
+          </div>
+          <div class="city-grid" id="city-grid"></div>
+        </div>
+      </section>
+
+      <section class="sec" id="hood" aria-labelledby="hood-title">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 id="hood-title"></h2>
+            <p id="hood-sub"></p>
+          </div>
+          <ol class="pipe" id="pipe"></ol>
+          <div class="facts-row" id="facts"></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="closing night" aria-labelledby="closing-h">
+      <span class="lane lane-a" aria-hidden="true"></span>
+      <h2 id="closing-h"></h2>
+      <a class="btn btn-primary" id="closing-cta" href="/live">Open the live map</a>
+      <span class="lane lane-b" aria-hidden="true"></span>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <a class="sign sign-sm" href="/" aria-label="Arus, home">
+      <span class="sign-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M12 2 4 10.5h5.2V22h5.6V10.5H20z" fill="currentColor"/></svg></span>
+      <span class="sign-word">Arus</span>
+    </a>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="/" data-i18n="footHome">Home</a>
+      <a href="/live" data-i18n="footLive">Live map</a>
+      <a href="/#how" data-i18n="footHow">How it works</a>
+    </nav>
+    <p class="foot-c">© 2026 Arus</p>
+  </footer>
+</body>
+</html>
